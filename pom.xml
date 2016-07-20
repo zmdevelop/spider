@@ -6,13 +6,41 @@
 	<version>2.1.0</version>
 	<name>Spiderman 2</name>
 	<description>Spiderman 2</description>
+	<parent>
+		<groupId>io.spring.platform</groupId>
+		<artifactId>platform-bom</artifactId>
+		<version>1.1.0.RELEASE</version>
+	</parent>
 	<repositories>
 		<repository>
 			<id>oss</id>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>cn.com.taiji</groupId>
+				<artifactId>cn.com.taiji.dependencies</artifactId>
+				<version>1.1.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+		</dependency>
+		<dependency>  
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
@@ -23,6 +51,10 @@
 			<artifactId>htmlcleaner</artifactId>
 			<version>2.2</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>

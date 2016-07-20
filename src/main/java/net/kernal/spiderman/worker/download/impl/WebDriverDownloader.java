@@ -26,7 +26,7 @@ public class WebDriverDownloader extends Downloader {
 		Downloader.Request request = new Downloader.Request(url);
 		Downloader.Response response = downloader.download(request);
 		final String body = response.getBodyStr();
-		System.out.println(body);
+		//System.out.println(body);
 	}
 	
 	private ChromeDriver client;

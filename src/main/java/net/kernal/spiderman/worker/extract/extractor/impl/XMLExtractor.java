@@ -211,7 +211,7 @@ public class XMLExtractor extends AbstractXPathExtractor {
 		extractor.addModel(page);
 		extractor.extract(new Callback() {
 			public void onModelExtracted(ModelEntry entry) {
-				System.out.println(entry.getModel().getName()+"->\r\n"+JSON.toJSONString(entry.getFields(), true)+"\r\n\r\n");
+				//System.out.println(entry.getModel().getName()+"->\r\n"+JSON.toJSONString(entry.getFields(), true)+"\r\n\r\n");
 			}
 			public void onFieldExtracted(FieldEntry entry) {
 			}

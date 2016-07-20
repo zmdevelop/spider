@@ -85,7 +85,7 @@ public class HtmlUnitDownloader extends Downloader {
 		Downloader.Request req = new Downloader.Request(url);
 		Downloader.Response resp = downloader.download(req);
 		final String body = resp.getBodyStr();
-		System.out.println(body);
+		//System.out.println(body);
 	}
 
 }
