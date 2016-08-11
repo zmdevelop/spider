@@ -4,7 +4,7 @@
     <property key="scheduler.period" value="24h" /><!-- 调度间隔时间 -->
     <property key="logger.level" value="DEBUG" /><!-- 日志级别 INFO DEBUG WARN ERROR OFF -->
     <property key="worker.download.class" value="net.kernal.spiderman.worker.download.impl.WebDriverDownloader" />
-    <property key="worker.download.chrome.driver" value="dist/chromedriver.exe" />
+    <property key="worker.download.chrome.driver" value="D:/360安全浏览器下载/chromedriver.exe" />
     <property key="worker.download.listener.delay" value="30s" />
     <property key="worker.download.selector.delay" value="1s" />
     <property key="worker.download.size" value="1" /><!-- 下载线程数 -->
