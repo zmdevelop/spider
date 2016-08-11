@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spiderman name="网易国内新闻采集">
+    <property key="duration" value="0" /><!-- 运行时间 0 表示永久，可以给 {n}s {n}m {n}h {n}d -->
+    <property key="scheduler.period" value="0" /><!-- 调度间隔时间 -->
+    <property key="logger.level" value="1" /><!-- 日志级别 INFO DEBUG WARN ERROR OFF -->
+    <property key="worker.download.size" value="1" /><!-- 下载线程数 -->
+    <property key="worker.extract.size" value="1" /><!-- 页面抽取线程数 -->
+    <property key="worker.result.size" value="1" /><!-- 结果处理线程数 -->
+    <property key="worker.result.limit" value="0" />
+    <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.ConsoleResultHandler" /> -->
+      <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileBodyResultHandler" />-->
+    <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileJsonResultHandler" /> -->
+    <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.SolrResultHandler"/>
+    <property key="queue.store.path" value="store/sina/store" /><!-- 存储文件的路径 -->
+    <property key="worker.result.store" value="store/sina/content"/>
+    <property key="queue.zbus.enabled" value="0" /><!-- 是否使用ZBus队列，暂时单机版不用，貌似性能还有问题 -->
+    <property key="queue.zbus.broker" value="jvm" /><!-- ZBus服务地址,三种模式：1.jvm(本地模式) 2.ip:port(single模式) 3.[ip:port,ip:port](ha模式) -->
+    <seed name="新浪历史" url="http://blog.sina.com.cn/lm/history/" /><!-- 写死种子入口的方式 -->
+   <extract><!-- 页面抽取规则 -->
+      <!-- <extractor name="Text" class="net.kernal.spiderman.worker.extract.extractor.impl.TextExtractor" isDefault="1" /> --><!--  正文抽取器 -->
+        <extractor name="Links" class="net.kernal.spiderman.worker.extract.extractor.impl.LinksExtractor" /><!-- 链接抽取器 -->
+        <extractor name="Html" class="net.kernal.spiderman.worker.extract.extractor.impl.HtmlCleanerExtractor"></extractor>
+		<!-- <page name="网页内容" extractor="Text" isPersisted="1">
+			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/s/blog_.*\.html\?tj\=hist$" />
+		</page>  -->
+		 <page name="列表页" extractor="Links" >
+			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/((lm/history/)|(.*g))$">
+			</url-match-rule>
+		</page> 
+		<page name="sinaht" extractor="Html">
+			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/s/blog_.*\.html\?tj\=hist$" />
+			<model name="soht">
+				<field name="title" xpath="//*[@id='articlebody']/div[1]/h1/text()"/>
+				<field name="content" xpath="//div[@class='articalContent']/text()" />
+				<field name="publishDate" xpath="//*[@class='atcbox']/div[1]/span/text()">
+				<field name="origin" xpath="//*[@class='introduction']/div[1]/p[1]/a/text()"></field>	
+				<field name="displayName" xpath="//*[@class='atcbox']/div[1]/a[2]/span/text()"/>
+				</field>
+			</model>
+		</page>
+		<!-- <page name="sin" extractor="html">
+			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/s/blog_.*\.html\?tj\=hist$" />
+			<model name="soht">
+				<field name="title" xpath="//*[@id='articlebody']/div[1]/h1/text()"/>
+				<field name="content" xpath="//div[@class='articalContent']/text()" />
+				<field name="publishDate" xpath="//*[@class='atcbox']/div[1]/span/text()">
+				<field name="origin" xpath="//*[@class='introduction']/div[1]/p[1]/a/text()"></field>	
+				<field name="displayName" xpath="//*[@class='atcbox']/div[1]/a[2]/span/text()"/>
+				</field>
+			</model>//*div[@class="d_post_content_main "]/div[1]/cc[1]/div[1]/text()
+		</page> -->
+		<page name="评论" extractor="html">
+			<url-match-rule type="regex">
+				^http://tieba\.baidu\.com/p/4706805721(.*)?$
+			</url-match-rule>
+			<model >
+				<field name="content" xpath="//*[@class='d_post_content_main']/div[1]/cc[1]/div[1]/text()" isArray="1"/>
+				<field name="hreg" xpath="//*[@class='pb_list_pager']/a/text()" isArray="1"/>
+			</model>
+		</page>
+	</extract> 
+	
+</spiderman>
