@@ -21,7 +21,7 @@ public class WebDriverDownloader extends Downloader {
 	public static void main(String[] args) {
 		final String url = "http://tianyancha.com/search/page/1?base=%E5%B9%BF%E4%B8%9C";
 		final Properties opts = new Properties();
-		opts.put("worker.download.chrome.driver", "D:/projects/spiderman/spiderman-webapp/dist/chromedriver.exe");
+		opts.put("worker.download.chrome.driver", "D:/360安全浏览器下载/chromedriver.exe");
 		Downloader downloader = new WebDriverDownloader(opts);
 		Downloader.Request request = new Downloader.Request(url);
 		Downloader.Response response = downloader.download(request);

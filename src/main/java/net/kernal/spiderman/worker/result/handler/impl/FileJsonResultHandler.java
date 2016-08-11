@@ -8,12 +8,13 @@ import com.alibaba.fastjson.JSON;
 import net.kernal.spiderman.kit.Context;
 import net.kernal.spiderman.kit.Counter;
 import net.kernal.spiderman.kit.K;
+import net.kernal.spiderman.kit.Properties;
 import net.kernal.spiderman.worker.extract.ExtractResult;
 import net.kernal.spiderman.worker.result.ResultTask;
 import net.kernal.spiderman.worker.result.handler.ResultHandler;
 
 public class FileJsonResultHandler implements ResultHandler {
-	
+	int i=0;
 	public void handle(ResultTask task, Counter c) {
 		final ExtractResult er = task.getResult();
 		final String url = task.getRequest().getUrl();
@@ -32,6 +33,17 @@ public class FileJsonResultHandler implements ResultHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Properties pro = er.getFields();
+		for(String str : pro.keySet())
+		{
+			System.out.println("-----"+str+"-----");
+		}
+		i++;
+		if(i>10)
+		{
+			System.exit(0);
+		}
+		
 	}
 	
 }

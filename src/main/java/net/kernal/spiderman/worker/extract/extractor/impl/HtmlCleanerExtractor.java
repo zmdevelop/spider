@@ -65,7 +65,7 @@ public class HtmlCleanerExtractor extends AbstractXPathExtractor {
 		if (nodeList == null || nodeList.length == 0) {
 			return null;
 		}
-		
+		System.out.println(nodeList+"---------");
 		return Arrays.asList(nodeList);
 	}
 	
