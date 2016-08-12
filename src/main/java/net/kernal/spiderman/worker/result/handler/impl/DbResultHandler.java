@@ -1,7 +1,10 @@
 package net.kernal.spiderman.worker.result.handler.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import com.alibaba.fastjson.JSON;
+
+import net.kernal.spiderman.kit.Context;
 import net.kernal.spiderman.kit.Counter;
 import net.kernal.spiderman.kit.JdbcUtils;
 import net.kernal.spiderman.kit.Properties;
@@ -17,6 +20,10 @@ public class DbResultHandler implements ResultHandler {
 	public void handle(ResultTask task, Counter c) {
 		// TODO Auto-generated method stub
 		final ExtractResult er = task.getResult();
+		String pageName = er.getPageName();
+		if(pageName.endsWith("_LinkList")){//是列表页 不处理
+			return ;
+		}
 		final String url = task.getRequest().getUrl();
 		final String json = JSON.toJSONString(er.getFields(), true);
 		System.out.println(json);

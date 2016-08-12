@@ -6,7 +6,6 @@ package net.kernal.spiderman.worker.result.handler.impl;
 
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Iterator;
 
 import net.kernal.spiderman.kit.Counter;
@@ -28,12 +27,11 @@ public class SolrResultHandler implements ResultHandler {
 	@Override
 	public void handle(ResultTask task, Counter c) {
 		final ExtractResult er = task.getResult();
-		final String url = task.getRequest().getUrl();
-		String pageName =  er.getPageName();
-		String modelname = er.getModelName();
-		if(modelname==null||modelname.equals("no-name")){
+		String pageName = er.getPageName();
+		if(pageName.endsWith("_LinkList")){//是列表页 不处理
 			return ;
 		}
+		final String url = task.getRequest().getUrl();
 		//final String content = er.getResponseBody();
 		//final String json = JSON.toJSONString(er.getFields(), true);
 		addIndex(er.getFields(),pageName,url);
