@@ -21,6 +21,7 @@ public abstract class Page {
 	private Extractor.Builder extractorBuilder;
 	private UrlMatchRules rules;
 	private Models models;
+    private String contentType;
 	private boolean isPersisted;// 是否持久化
 	private Field.ValueFilter filter;//全局Filter，所有Model的所有Field都需要执行
 	
@@ -197,6 +198,14 @@ public abstract class Page {
 		public List<Model> all() {
 			return this.models;
 		}
+	}
+	
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	public String toString() {

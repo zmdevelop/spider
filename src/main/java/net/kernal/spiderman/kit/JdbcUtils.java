@@ -1,6 +1,7 @@
 package net.kernal.spiderman.kit;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,7 +38,7 @@ public class JdbcUtils {
 	        pstmt.setString(6, field.getString("origin"));
 	        pstmt.setString(7, field.getString("url"));
 	        pstmt.setString(8, field.getString("author"));
-	        pstmt.setString(9, field.getString("create_time"));
+	        pstmt.setDate(9, new Date(System.currentTimeMillis()));
 	        num=pstmt.executeUpdate();
 	        pstmt.close();
 	    } catch (SQLException e) {
@@ -93,6 +94,7 @@ public class JdbcUtils {
 			stmt.executeUpdate(createSql);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -100,29 +102,31 @@ public class JdbcUtils {
 
 	public static void main(String[] args) throws SQLException {
 		DataSource dataSource = TomcatDataSource.getDataSource();
-		/*String sql ="CREATE TABLE 'conversation' ("+
-			  " 'Id' int(11) NOT NULL AUTO_INCREMENT,"+
-			  "'title' varchar(255) DEFAULT NULL,"+
-			  "'author' varchar(255) DEFAULT NULL,"+
-			  "'publishTime' datetime DEFAULT NULL,"+
-			  "'updateTime' datetime DEFAULT NULL,"+
-			  "'mainLink' varchar(255) DEFAULT NULL,"+
-			  "'selfLink' varchar(255) DEFAULT NULL,"+
-			  "'content' text,"+
-			  "'mainLinkMd5' varchar(255) DEFAULT NULL,"+
-			  "'selfLinkMd5' varchar(255) DEFAULT NULL,"+
-			  "'isTopic' bit(1) DEFAULT NULL,"+
-			  "'savetime' timestamp NULL DEFAULT CURRENT_TIMESTAMP,"+
-			  "'tid' varchar(255) DEFAULT NULL,"+
-			  "PRIMARY KEY ('Id'),"+
-			   "UNIQUE KEY 'selfLink' ('selfLink')"+
+		String sql ="CREATE TABLE `ccc` ("+
+			  " `id` int(11) NOT NULL AUTO_INCREMENT,"+
+			  "`title` varchar(255) DEFAULT NULL,"+
+			  "`author` varchar(255) DEFAULT NULL,"+
+			  "`publishTime` datetime DEFAULT NULL,"+
+			  "`updateTime` datetime DEFAULT NULL,"+
+			  "`mainLink` varchar(255) DEFAULT NULL,"+
+			  "`selfLink` varchar(255) DEFAULT NULL,"+
+			  "`content` text,"+
+			  "`mainLinkMd5` varchar(255) DEFAULT NULL,"+
+			  "`selfLinkMd5` varchar(255) DEFAULT NULL,"+
+			  "`isTopic` bit(1) DEFAULT NULL,"+
+			  "`savetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,"+
+			  "`tid` varchar(255) DEFAULT NULL,"+
+			  "PRIMARY KEY (`Id`),"+
+			   "UNIQUE KEY `selfLink` (`selfLink`)"+
 			  ")";
-		getInstance().createTable(dataSource.getConnection(),sql);*/
-		Properties field = new Properties();
+		System.out.println(sql);
+		getInstance().createTable(dataSource.getConnection(),sql);
+		System.out.println("end");
+		/*Properties field = new Properties();
 		field.put("title", "123");
 		field.put("author", "123");
 		field.put("selfLink", "123");
-		getInstance().insertSelf(field, dataSource.getConnection(), "conversation");
+		getInstance().insertSelf(field, dataSource.getConnection(), "conversation");*/
 	}
 	
 }

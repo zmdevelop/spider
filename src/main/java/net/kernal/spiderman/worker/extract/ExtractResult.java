@@ -15,6 +15,11 @@ public class ExtractResult implements Serializable {
 	/**
 	 * 结果所属模型名称
 	 */
+	/**
+	 * 内容页面类型
+	 */
+	private String contentType;
+	
 	private String modelName;
 	/**
 	 * 字段值
@@ -48,6 +53,15 @@ public class ExtractResult implements Serializable {
 		return this.fields;
 	}
 	
+	
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
 	@Override
 	public String toString() {
 		return "ExtractResult [page=" + pageName + ", model=" + modelName + ", fields=" + fields + "]";

@@ -2,6 +2,8 @@ package net.kernal.spiderman.worker.result.handler.impl;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.JSON;
 
 import net.kernal.spiderman.kit.Context;
@@ -26,16 +28,49 @@ public class DbResultHandler implements ResultHandler {
 		}
 		final String url = task.getRequest().getUrl();
 		final String json = JSON.toJSONString(er.getFields(), true);
-		System.out.println(json);
+        System.out.println("------------"+er.getContentType()+"-----------");
+		System.exit(0);
+        if(er.getContentType().startsWith("1"))
+        {
+        	String tableName = er.getContentType().split("-")[1];
+        	if(!StringUtils.isEmpty(tableName))
+        	{
+        		 insertCustom(er.getFields(),tableName);
+        	}
+        }
+        else
+        {
 		insertDb(er.getFields());
+        }
 	}
-
+    /**
+     * 标准插入sql
+     * @param field
+     */
 	private void insertDb(Properties field) {
 		String sql = "insert into spider_content (id,title,sub_title,content,publis_time,origin,url,author,create_time) VALUES(?,?,?,?,?,?,?,?,?)";
 		Connection conn;
+		System.out.println(field.getString("url"));
+		System.out.println(field);
 		try {
 			conn = TomcatDataSource.getDataSource().getConnection();
 			JdbcUtils.getInstance().insert(sql, field, conn);
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.exit(0);
+	}
+	/**
+	 * 自定义插入
+	 */
+	private void insertCustom(Properties field,String tableName)
+	{
+		Connection conn;
+		try {
+			conn = TomcatDataSource.getDataSource().getConnection();
+			JdbcUtils.getInstance().insertSelf(field, conn, tableName);
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
