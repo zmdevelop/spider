@@ -23,14 +23,14 @@ public class DbResultHandler implements ResultHandler {
 		// TODO Auto-generated method stub
 		final ExtractResult er = task.getResult();
 		String pageName = er.getPageName();
+		System.out.println("------------"+pageName+"-----------");
 		if(pageName.endsWith("_LinkList")){//是列表页 不处理
+			System.out.println("------------"+er.getContentType()+"-----------");
 			return ;
 		}
-		final String url = task.getRequest().getUrl();
-		final String json = JSON.toJSONString(er.getFields(), true);
-        System.out.println("------------"+er.getContentType()+"-----------");
-		System.exit(0);
-        if(er.getContentType().startsWith("1"))
+		//final String url = task.getRequest().getUrl();
+		//final String json = JSON.toJSONString(er.getFields(), true);
+        if(er.getContentType()!=null && er.getContentType().startsWith("1"))
         {
         	String tableName = er.getContentType().split("-")[1];
         	if(!StringUtils.isEmpty(tableName))
@@ -60,7 +60,6 @@ public class DbResultHandler implements ResultHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.exit(0);
 	}
 	/**
 	 * 自定义插入
