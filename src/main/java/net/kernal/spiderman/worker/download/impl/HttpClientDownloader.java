@@ -194,5 +194,12 @@ public class HttpClientDownloader extends Downloader {
 			e.printStackTrace();
 		}
 	}
+	public static void main(String[] args) {
+		HttpClientDownloader d = new HttpClientDownloader();
+		Response r = d.download(new Request("http://china.huanqiu.com/article/2016-08/9313633.html?from=bdwz"));
+		String str = r.getBodyStr();
+		System.out.println(str);
+		
+	}
 
 }
