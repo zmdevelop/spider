@@ -60,7 +60,8 @@ public class Spiderman {
 		if (period > 0) {
 			this.scheduler.scheduleAtFixedRate(initSeeds, 5000, period, TimeUnit.MILLISECONDS);
 		} else {
-			initSeeds.execute();
+			//initSeeds.execute();
+			initSeeds.run();//调度时 清楚seeds;
 		}
 
 		Thread thread = new Thread(() -> {
@@ -123,6 +124,7 @@ public class Spiderman {
 					.map(seed -> new DownloadTask(seed, "seeds"))
 					.forEach(task -> context.getTaskManager().append(task));
 				logger.debug("初始化种子成功...");
+				//启动时 移除seeds 
 			} catch (Throwable e) {
 				logger.error("初始化种子失败", e);
 			}

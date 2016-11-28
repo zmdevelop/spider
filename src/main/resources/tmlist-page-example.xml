@@ -6,10 +6,11 @@
     <property key="worker.download.size" value="4" /><!-- 下载线程数 -->
     <property key="worker.extract.size" value="4" /><!-- 页面抽取线程数 -->
     <property key="worker.result.size" value="4" /><!-- 结果处理线程数 -->
-    <property key="worker.result.limit" value="100" />
+    <property key="worker.result.limit" value="0" />
     <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.ConsoleResultHandler" /> -->
-      <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileBodyResultHandler" />-->
-   <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileJsonResultHandler" /> 
+   <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileBodyResultHandler" />-->
+   <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileJsonResultHandler" />
+   <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.MongoDbResultHandler" />  -->
    <!--  <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.SolrResultHandler"/> -->
     <property key="queue.store.path" value="store/jjh/store" /><!-- 存储文件的路径 -->
     <property key="worker.result.store" value="store/jjh/content"/>
@@ -19,17 +20,24 @@
    <extract><!-- 页面抽取规则 -->
        <extractor name="Text" class="net.kernal.spiderman.worker.extract.extractor.impl.TextExtractor" isDefault="1" /><!--  正文抽取器 -->
         <extractor name="Links" class="net.kernal.spiderman.worker.extract.extractor.impl.LinksExtractor" /><!-- 链接抽取器 -->
-       <!--  <extractor name="Html" class="net.kernal.spiderman.worker.extract.extractor.impl.HtmlCleanerExtractor"></extractor> -->
+         <extractor name="Html" class="net.kernal.spiderman.worker.extract.extractor.impl.HtmlCleanerExtractor"></extractor>
 		<!-- <page name="网页内容" extractor="Text" isPersisted="1">
 			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/s/blog_.*\.html\?tj\=hist$" />
 		</page>  -->
-		 <page name="列表页" extractor="Links" >
+		 <page name="列表页_LinkList" extractor="Links" >
 			<url-match-rule type="regex" value="^http://123\.57\.212\.98((:80)|)/html/tm(?!.*content).+$"/>
 			
 		</page> 
-		<page name="内容页面"  >
+		<page name="内容页面"  extractor="Html">
 			<url-match-rule type="regex" value="^http://123\.57\.212\.98((:80)|)/html/tm.+/content/.+\.html$"/>
-			
+			<model name="sdg">
+				<field name="title" xpath="//body/div[3]/div/div[1]/h2/text()"/>
+				<field name="content" xpath="//body/div[3]/div/div[2]/text()" />
+				<field name="publishDate" xpath="//body/div[3]/div/div[1]/div/h4/em[2]/text()"/>
+				<field name="origin" xpath="//head/title/text()"></field>	
+				<field name="displayName" xpath="//body/div[3]/ul/li[last()]/a">
+				</field>
+			</model>
 		</page>
 		<!-- <page name="sinaht" extractor="html">
 			<url-match-rule type="regex" value="^http://blog\.sina\.com\.cn/s/blog_.*\.html\?tj\=hist$" />

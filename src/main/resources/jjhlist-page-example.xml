@@ -9,7 +9,7 @@
     <property key="worker.result.limit" value="100" />
     <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.ConsoleResultHandler" /> -->
       <!-- <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileBodyResultHandler" />-->
-   <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.FileJsonResultHandler" /> 
+   <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.MongoDbResultHandler" /> 
    <!--  <property key="worker.result.handler" value="net.kernal.spiderman.worker.result.handler.impl.SolrResultHandler"/> -->
     <property key="queue.store.path" value="store/jjh/store" /><!-- 存储文件的路径 -->
     <property key="worker.result.store" value="store/jjh/content"/>

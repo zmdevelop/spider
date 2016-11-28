@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import org.bson.Document;
@@ -411,6 +412,10 @@ public enum MongoDBUtil {
 	public void save(String collName, Map fields) {
 		Document doc = new Document();
 		doc.putAll(fields);
+		//ArrayUtil.foreach(map,(k,v) -> {System.out.println(k+"::"+v);return true;});  
+		/*for( Entry<String, Object> en:doc.entrySet()){
+			System.out.println();
+		}*/
 		doc.append("insertDate", new Date());
 		getCollection(collName).insertOne(doc);
 	}

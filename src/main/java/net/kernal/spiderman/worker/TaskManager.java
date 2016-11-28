@@ -103,7 +103,7 @@ public class TaskManager {
 		logger.debug("创建下载队列(默认)"); 
 		final String extractQueueName = params.getString("queue.download.name", "SPIDERMAN_EXTRACT_TASK");
 		this.extractQueue = queueBuilder.build(extractQueueName, params);
-		logger.debug("创建下载队列(默认)");
+		logger.debug("创建处理队列(默认)");
 		final String resultQueueName = params.getString("queue.download.name", "SPIDERMAN_RESULT_TASK");
 		this.resultQueue = queueBuilder.build(resultQueueName, params);
 		logger.debug("创建结果队列(默认)");
@@ -126,6 +126,9 @@ public class TaskManager {
 			this.resultQueue.append(task);
 		}
 		logger.info("添加任务: "+ task.getKey()+", 来源->"+source);
+		if(source!=null && source.equals("http://123.57.212.98/html/tm/12/12_196.html")){
+			System.out.println("http://123.57.212.98/html/tm/12/12_196.html");
+		}
 	}
 	
 	public Queue<Task> getDownloadQueue() {
@@ -160,8 +163,7 @@ public class TaskManager {
 	}
 	
 	public void shutdown() {
-		if (this.downloadQueue != null) {
-			this.downloadQueue.clear();
+		if (this.downloadQueue != null) { 
 		}
 		if (this.extractQueue != null) {
 			this.extractQueue.clear();
