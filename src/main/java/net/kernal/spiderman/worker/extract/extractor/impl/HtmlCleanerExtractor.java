@@ -8,19 +8,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.kernal.spiderman.kit.K;
+import net.kernal.spiderman.worker.download.Downloader.Request;
+import net.kernal.spiderman.worker.download.Downloader.Response;
+import net.kernal.spiderman.worker.download.impl.HttpClientDownloader;
+import net.kernal.spiderman.worker.extract.ExtractTask;
+import net.kernal.spiderman.worker.extract.extractor.AbstractXPathExtractor;
+import net.kernal.spiderman.worker.extract.extractor.Extractor;
+import net.kernal.spiderman.worker.extract.schema.Field;
+import net.kernal.spiderman.worker.extract.schema.Model;
+
 import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.SimpleXmlSerializer;
 import org.htmlcleaner.TagNode;
 
 import com.alibaba.fastjson.JSON;
-
-import net.kernal.spiderman.kit.K;
-import net.kernal.spiderman.worker.extract.ExtractTask;
-import net.kernal.spiderman.worker.extract.extractor.AbstractXPathExtractor;
-import net.kernal.spiderman.worker.extract.extractor.Extractor;
-import net.kernal.spiderman.worker.extract.schema.Field;
-import net.kernal.spiderman.worker.extract.schema.Model;
 
 public class HtmlCleanerExtractor extends AbstractXPathExtractor {
 
@@ -125,12 +128,16 @@ public class HtmlCleanerExtractor extends AbstractXPathExtractor {
 	}
 	
 	public static void main(String[] args) {
-		String html = "<html><title>Hello</title><targets><target name='vivi' /><target name='linda' /></targets></html>";
+		HttpClientDownloader d = new HttpClientDownloader();
+		Response r = d.download(new Request("http://www.jinhu.gov.cn/html/jinhu/xwzx/gggs/content/24428.html"));
+		String str = r.getBodyStr();
+		System.out.println(str);
+		String html = "<html><title>Hello</title><targets><target name='vivi' />dsf<target name='linda' />344</targets></html>";
 		Extractor extractor = new HtmlCleanerExtractor(html);
 		Model page = new Model("page");
 		page.addField("title").set("xpath", "//title/text()");
-		page.addField("target").set("xpath", "//target").set("isAutoExtractAttrs", true).set("isArray", true);
-		extractor.addModel(page);
+		page.addField("article").set("xpath", "//*[@name='vivi']").set("isAutoExtractAttrs", true).set("isArray", false);
+		extractor.addModel(page);//*[@id="destoon_member"]
 		extractor.extract(new Callback(){
 			public void onModelExtracted(ModelEntry entry) {
 				System.out.println(entry.getModel().getName()+"->\r\n"+JSON.toJSONString(entry.getFields(), true)+"\r\n\r\n");

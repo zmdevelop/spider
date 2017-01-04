@@ -126,9 +126,9 @@ public class TaskManager {
 			this.resultQueue.append(task);
 		}
 		logger.info("添加任务: "+ task.getKey()+", 来源->"+source);
-		if(source!=null && source.equals("http://123.57.212.98/html/tm/12/12_196.html")){
+		/*if(source!=null && source.equals("http://123.57.212.98/html/tm/12/12_196.html")){
 			System.out.println("http://123.57.212.98/html/tm/12/12_196.html");
-		}
+		}*/
 	}
 	
 	public Queue<Task> getDownloadQueue() {

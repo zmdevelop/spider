@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.kernal.spiderman.kit.K;
+import net.kernal.spiderman.kit.Properties;
+import net.kernal.spiderman.worker.download.Downloader;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -27,10 +31,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.util.EntityUtils;
-
-import net.kernal.spiderman.kit.K;
-import net.kernal.spiderman.kit.Properties;
-import net.kernal.spiderman.worker.download.Downloader;
 
 /**
  * 默认下载器，基于HttpClient实现
@@ -55,11 +55,11 @@ public class HttpClientDownloader extends Downloader {
 	            .setRedirectsEnabled(props.getBoolean("downloader.redirectsEnabled", false))
 	            .setCircularRedirectsAllowed(props.getBoolean("downloader.circularRedirectsAllowed", false))
 	            // 设置从连接池获取连接的超时时间
-	            .setConnectionRequestTimeout(props.getInt("downloader.connectionRequestTimeout", 1000))
+	            .setConnectionRequestTimeout(props.getInt("downloader.connectionRequestTimeout", 10000))
 	            // 设置连接远端服务器的超时时间
-	            .setConnectTimeout(props.getInt("downloader.connectTimeout", 2000))
+	            .setConnectTimeout(props.getInt("downloader.connectTimeout", 20000))
 	            // 设置从远端服务器上传输数据回来的超时时间
-	            .setSocketTimeout(props.getInt("downloader.socketTimeout", 5000))
+	            .setSocketTimeout(props.getInt("downloader.socketTimeout", 20000))
 	            .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.DIGEST))
 	            .setProxyPreferredAuthSchemes(Arrays.asList(AuthSchemes.BASIC));
 		
@@ -196,7 +196,7 @@ public class HttpClientDownloader extends Downloader {
 	}
 	public static void main(String[] args) {
 		HttpClientDownloader d = new HttpClientDownloader();
-		Response r = d.download(new Request("http://china.huanqiu.com/article/2016-08/9313633.html?from=bdwz"));
+		Response r = d.download(new Request("http://www.jinhu.gov.cn/html/jinhu/xwzx/gggs/content/24409.html"));
 		String str = r.getBodyStr();
 		System.out.println(str);
 		

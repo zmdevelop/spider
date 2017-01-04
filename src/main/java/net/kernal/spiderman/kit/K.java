@@ -688,6 +688,6 @@ public class K {
     }
     
     public static void main(String[] args) {
-		System.out.println(findOneDate("sdfjldskj2015-3/3日 12时58分23秒wer"));
+		System.out.println(findOneDate("2015-3-3日 12时58分23秒wer"));
 	}
 }

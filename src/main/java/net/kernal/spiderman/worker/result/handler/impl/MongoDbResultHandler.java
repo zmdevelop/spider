@@ -16,7 +16,6 @@ public class MongoDbResultHandler implements ResultHandler {
 		// TODO Auto-generated method stub
 		final ExtractResult er = task.getResult();
 		String pageName = er.getPageName();
-		System.out.println("------------" + pageName + "-----------");
 		if (pageName.endsWith("_LinkList")) {// 是列表页 不处理
 			return;
 		}

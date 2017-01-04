@@ -39,6 +39,7 @@ public class DefaultQueue<E> implements Queue<E> {
 	public void append(E e) {
 		try {
 			this.queue.put(e);
+			logger.debug(getClass().getName()+" 队列元素剩余数:"+queue.size());
 		} catch (InterruptedException ex) {
 		}
 	}

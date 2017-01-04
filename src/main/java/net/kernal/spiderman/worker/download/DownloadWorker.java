@@ -3,15 +3,19 @@ package net.kernal.spiderman.worker.download;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.jetty.util.log.Log;
+
 import net.kernal.spiderman.Spiderman;
 import net.kernal.spiderman.kit.K;
+import net.kernal.spiderman.logger.Logger;
+import net.kernal.spiderman.logger.Loggers;
 import net.kernal.spiderman.worker.Task;
 import net.kernal.spiderman.worker.Worker;
 import net.kernal.spiderman.worker.WorkerManager;
 import net.kernal.spiderman.worker.WorkerResult;
 
 public class DownloadWorker extends Worker {
-
+	private final static Logger logger = Loggers.getLogger(DownloadWorker.class);
 	private long delay;
 	private Downloader downloader;
 	/** 保存已经重定向过的URL地址 */
@@ -42,7 +46,8 @@ public class DownloadWorker extends Worker {
 		}
 		// 处理异常
 		if (response.getException() != null) {
-			throw new Spiderman.Exception("下载["+request.getUrl()+"]失败", response.getException());
+			//throw new Spiderman.Exception("下载["+request.getUrl()+"]失败", response.getException());
+			logger.error("下载["+request.getUrl()+"]失败", response.getException());
 		}
 		// 处理重定向
 		final int statusCode = response.getStatusCode();
